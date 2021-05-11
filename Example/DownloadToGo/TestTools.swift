@@ -16,11 +16,11 @@ let setSmallerOfflineDRMExpirationMinutes: Int? = nil
 
 let defaultEnv = "http://cdnapi.kaltura.com"
 
-struct ItemOTTParamsJSON: Decodable {
+struct ItemOTTParamsJSON: Codable {
     let format: String?
 }
 
-struct ItemJSON: Decodable {
+struct ItemJSON: Codable {
     let id: String
     let title: String?
     let partnerId: Int?
@@ -37,14 +37,14 @@ struct ItemJSON: Decodable {
     let ottParams: ItemOTTParamsJSON?
 }
 
-struct ExpectedValues: Decodable {
+struct ExpectedValues: Codable {
     let estimatedSize: Int64?
     let downloadedSize: Int64?
     let audioLangs: [String]?
     let textLangs: [String]?
 }
 
-struct OptionsJSON: Decodable {
+struct OptionsJSON: Codable {
     let audioLangs: [String]?
     let allAudioLangs: Bool?
     let textLangs: [String]?

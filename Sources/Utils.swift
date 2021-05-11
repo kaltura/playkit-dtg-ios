@@ -182,6 +182,10 @@ public enum DTGError: LocalizedError {
     case insufficientDiskSpace(freeSpaceInMegabytes: Int)
     /// Network timeout
     case networkTimeout(url: String)
+    /// Invalid URL
+    case invalidUrl(url: String)
+    /// Server down
+    case internalServerDown
     
     public var errorDescription: String? {
         switch self {
@@ -195,6 +199,10 @@ public enum DTGError: LocalizedError {
             return "insufficient disk space to start or continue the download, only have \(freeSpaceInMegabytes)MB free..."
         case .networkTimeout:
             return "Network timeout"
+        case .invalidUrl:
+            return "Invalid URL"
+        case .internalServerDown:
+            return "Internal Server is Down"
         }
     }
 }

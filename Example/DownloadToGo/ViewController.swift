@@ -105,6 +105,19 @@ class Item {
 }
 
 
+func showJsonTemplate() {
+    let json = try! JSONEncoder().encode([
+        ItemJSON(id: "ID", title: "TITLE", partnerId: 1, ks: nil, env: "http://example.com", url: "http://example.com/master.m3u8", 
+                 options: OptionsJSON(audioLangs: nil, allAudioLangs: false, textLangs: nil, allTextLangs: false, 
+                                      videoCodecs: nil, audioCodecs: nil, videoWidth: nil, videoHeight: nil, videoBitrates: nil, 
+                                      allowInefficientCodecs: nil), expected: nil, ott: true, 
+                                                                    ottParams: ItemOTTParamsJSON(format: "FORMAT"))])
+    
+    print("JSON Template:", String(data: json, encoding: .utf8))
+    
+}
+
+
 class ViewController: UIViewController {
     let dummyFileName = "dummyfile"
     let videoViewControllerSegueIdentifier = "videoViewController"
@@ -578,6 +591,10 @@ extension ViewController: ContentManagerDelegate {
             }
             self.statusLabel.text = newState.asString()
         }
+    }
+    
+    func serverDidChangeState(_ state: DTGServerState) {
+        print("serverDidChangeState: \(state)")
     }
 }
 

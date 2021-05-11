@@ -129,6 +129,14 @@ public protocol ContentManagerDelegate: class {
     
     /// Item has changed state. in case state will be failed, the error will be provided (interupted state could also provide error).
     func item(id: String, didChangeToState newState: DTGItemState, error: Error?)
+    
+    /// The state of the internal web server has changed.
+    func serverDidChangeState(_ state: DTGServerState)
+}
+
+// Default implementation of serverDidChangeState() to make it optional.
+public extension ContentManagerDelegate {
+    func serverDidChangeState(_ state: DTGServerState) {}
 }
 
 /// A downloadable item.
@@ -263,6 +271,22 @@ public enum LogLevel {
 }
 
 public typealias DTGRequestParams = (url: URL, headers: [String:String])
+
 public protocol DTGRequestParamsAdapter: class {
     func adapt(_ params: DTGRequestParams) -> DTGRequestParams
+}
+
+/// The state of the internal web server.
+public enum DTGServerState {
+    /// Server is started and accepting connections.
+    case started(serverUrl: URL?)
+    
+    /// Server is stopped.
+    case stopped
+    
+    /// Server is handling requests.
+    case connected(serverUrl: URL?)
+    
+    /// Server has finished handling requests (back to idle).
+    case disconnected(serverUrl: URL?)
 }

@@ -380,9 +380,29 @@ public class ContentManager: NSObject, DTGContentManager {
 
 extension ContentManager: GCDWebServerDelegate {
     
+    private func report(_ state: DTGServerState) {
+        log.debug("Web server state=\(state), app state=\(UIApplication.shared.applicationState)")
+
+        delegate?.serverDidChangeState(state)
+    }
+    
+    public func webServerDidConnect(_ server: GCDWebServer) {
+        report(.connected(serverUrl: server.serverURL))
+    }
+    
+    public func webServerDidDisconnect(_ server: GCDWebServer) {
+        report(.disconnected(serverUrl: server.serverURL))
+    }
+    
+    public func webServerDidStop(_ server: GCDWebServer) {
+        report(.stopped)
+    }
+    
     public func webServerDidStart(_ server: GCDWebServer) {
         self.startCompletionHandler?()
         self.startCompletionHandler = nil
+
+        report(.started(serverUrl: server.serverURL))
     }
 }
 
